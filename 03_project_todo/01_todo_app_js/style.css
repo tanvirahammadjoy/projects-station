@@ -1,0 +1,268 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background-color: #4e4e4e;
+  color: white;
+}
+
+body.dark {
+  background-color: #3d3d3d;
+  color: white;
+}
+
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+#todo-top-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #3d3d3d;
+  border-bottom: 2px solid #4e4e4e;
+  box-shadow: 0px 0px 10px 0px #000000;
+}
+
+#todo-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#todo-list-items {
+  min-height: 100vh;
+  padding: 50px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#todo-input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+#add-todo {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  text-emphasis: none;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+#add-todo:hover {
+  background-color: #4e4e4e;
+}
+
+#todo-save {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+#todo-save:hover {
+  background-color: #4e4e4e;
+}
+
+#todo-filter,
+#todo-sort {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+#todo-filter:hover {
+  background-color: #4e4e4e;
+}
+
+#todo-search {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+#todo-search:hover {
+  background-color: #4e4e4e;
+}
+
+#theme-selector {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+.todo-count {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+.todo-item {
+  min-width: 300px;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+.todo-text {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.todo-text:hover {
+  background-color: #4e4e4e;
+}
+
+.todo-text:active {
+  background-color: #4e4e4e;
+  color: #ffffff;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+  cursor: pointer;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #ffffff;
+}
+
+.todo-text::selection {
+  background-color: #4e4e4e;
+  color: #ffffff;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+  cursor: pointer;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #ffffff;
+}
+
+.todo-text::-moz-selection {
+  background-color: #4e4e4e;
+  color: #ffffff;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+  cursor: pointer;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #ffffff;
+}
+
+.completed {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #ffffff;
+}
+
+.todo-delete-button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+.todo-delete-button:hover {
+  background-color: #4e4e4e;
+}
+
+.todo-delete-button:active {
+  background-color: #4e4e4e;
+}
+
+.todo-edit-button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  box-shadow: 0px 0px 10px 0px #000000;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: capitalize;
+}
+
+.todo-edit-button:hover {
+  background-color: #4e4e4e;
+}
+
+.todo-edit-button:active {
+  background-color: #4e4e4e;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: #3d3d3d;
+  border-top: 2px solid #4e4e4e;
+  box-shadow: 0px 0px 10px 0px #000000;
+}

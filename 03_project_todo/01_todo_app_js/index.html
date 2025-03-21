@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo app</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="todo-top-bar">
+        <input type="text" id="todo-input" placeholder="add todo">
+        <button type="button" id="add-todo">add-todo</button>
+        <button type="button" id="todo-save">todoSave</button>
+        <select title="todo-filter" name="todo-filter" id="todo-filter">
+            <option value="all">all</option>
+            <option value="completed">completed</option>
+            <option value="uncompleted">uncompleted</option>
+            <option value="deleted">deleted</option>
+            <option value="search">search</option>
+        </select>
+        <input id="todo-search" type="search" placeholder="search hear your todo?">
+        <select title="todo-sort" name="todo-sort" id="todo-sort">
+            <option value="asc">asc</option>
+            <option value="desc">desc</option>
+            <option value="random">random</option>
+            <option value="latest">latest</option>
+            <option value="oldest">oldest</option>
+            <option value="completed">completed</option>
+            <option value="uncompleted">uncompleted</option>
+            <option value="deleted">deleted</option>
+            <option value="search">search</option>
+        </select>
+        <select name="theme" id="theme-selector" title="theme-selector">
+            <option value="light">light</option>
+            <option value="dark">dark</option>
+            <option value="random">random</option>
+            <option value="system">system</option>
+            <option value="default">default</option>
+        </select>
+        <div class="todo-count">0</div>
+    </header>
+    <main id="todo-main-container">
+        <ul id="todo-list-items"></ul>
+    </main>
+    <footer>
+        <p>&copy; 2025 todo app</p>
+    </footer>
+    <script src="script.js" defer></script>
+</body>
+</html>
