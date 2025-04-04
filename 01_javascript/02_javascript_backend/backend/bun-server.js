@@ -14,3 +14,5 @@ serve({
   port: 3000,
   hostname: "127.0.0.1",
 });
+
+console.log("🚀 Server running at http://localhost:3000");

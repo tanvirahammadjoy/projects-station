@@ -1,5 +1,5 @@
 // server.js
-import { serve } from "https://deno.land/std@0.214.0/http/server.ts";
+// import { serve } from "https://deno.land/std@0.214.0/http/server.ts";
 // import { serve } from "deno"; // this will not work in deno
 
 function handler(req) {
@@ -20,5 +20,5 @@ function handler(req) {
 }
 
 console.log("🚀 Server running at http://localhost:8000");
-serve(handler, { port: 8000 });
-// Deno.serve(handler, { port: 8000 });
+// serve(handler, { port: 8000 });
+Deno.serve(handler, { port: 8000 });
