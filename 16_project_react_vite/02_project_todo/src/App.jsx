@@ -1,7 +1,7 @@
-import React from "react";
-import useState from "react";
+import React, { useState } from "react";
 import Input from "./components/ui/input";
 import Button from "./components/ui/button";
+import Card from "./components/ui/card";
 import "./App.css";
 
 export default function TodoApp() {
@@ -19,19 +19,25 @@ export default function TodoApp() {
   };
 
   return (
-    <div className="App">
+    <div className="App p-4 rounded shadow">
       <h1>Todo App</h1>
+
       <Input
         value={task}
         onChange={(e) => setTask(e.target.value)}
         placeholder="Enter a task"
       />
+
       <Button onClick={addTask}>Add Task</Button>
-      <ul>
+      {/* <ul>
         {tasks.map((t) => (
           <li key={t.id}>{t.text}</li>
         ))}
-      </ul>
+      </ul> */}
+
+      {tasks.map((t) => (
+        <Card key={t.id}>{t.text}</Card>
+      ))}
     </div>
   );
 }
