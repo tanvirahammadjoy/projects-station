@@ -1,0 +1,21 @@
+{
+  "name": "express-node-server",
+  "version": "1.0.0",
+  "description": "Whether you’re using Node.js, Deno, or Bun, and frameworks like Express, Oak, or Elysia, the backend has core jobs:",
+  "main": "express-node-server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node express-node-server.js",
+    "dev": "nodemon express-node-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tanvir",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^1.4.5-lts.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

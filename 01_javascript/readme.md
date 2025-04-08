@@ -1,4 +1,4 @@
-# That's a great step! Deploying your apps on real hosting platforms helps you understand how web development works in the real world — things like servers, domains, environments, and performance. Here's a list of popular hosting platforms you can start with — from free versions to paid plans
+# Deploying apps on real hosting platforms helps us understand how web development works in the real world — things like servers, domains, environments, and performance. Here's a list of popular hosting platforms we can start with — from free versions to paid plans
 
 🌐 1. Vercel
 Best for: React, Next.js, and frontend projects.
