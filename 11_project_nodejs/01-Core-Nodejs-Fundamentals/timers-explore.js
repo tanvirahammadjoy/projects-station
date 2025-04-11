@@ -9,7 +9,7 @@ const {
 
 // Basic timers
 const timeout = setTimeout(() => {
-  console.log("Timeout executed after 1 second");
+  console.log("Timeout executed after 1000ms second");
 }, 1000);
 
 const interval = setInterval(() => {
@@ -49,5 +49,7 @@ async function timedOperation() {
   await delay(2000);
   console.log("Operation completed after delay");
 }
+
+// clearTimeout(timeout, 1000); // Clear the timeout if needed
 
 timedOperation();
