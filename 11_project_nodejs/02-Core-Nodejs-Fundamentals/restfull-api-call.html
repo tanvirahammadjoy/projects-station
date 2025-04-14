@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>REST API Frontend</title>
+</head>
+<body>
+  <h1>REST API Example</h1>
+
+  <button onclick="loadUsers()">Load Users</button>
+  <button onclick="loadPosts()">Load All Posts</button>
+  <button onclick="loadUserPosts(1)">Posts by Alice</button>
+  <button onclick="loadUserPosts(2)">Posts by Bob</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    const output = document.getElementById("output");
+
+    async function loadUsers() {
+      const res = await fetch("http://localhost:3000/users");
+      const data = await res.json();
+      output.textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function loadPosts() {
+      const res = await fetch("http://localhost:3000/posts");
+      const data = await res.json();
+      output.textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function loadUserPosts(userId) {
+      const res = await fetch(`http://localhost:3000/posts?userId=${userId}`);
+      const data = await res.json();
+      output.textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
