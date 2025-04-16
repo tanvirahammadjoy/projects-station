@@ -15,6 +15,7 @@ const server = http.createServer((req, res) => {
     res.end();
     return;
   }
+  
   // Set CORS headers for all other requests
   res.setHeader("Access-Control-Allow-Origin", "*");
 
