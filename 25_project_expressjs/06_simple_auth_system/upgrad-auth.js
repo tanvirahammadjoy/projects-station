@@ -28,17 +28,20 @@ const authenticateToken = (req, res, next) => {
   const token =
     req.headers["authorization"] && req.headers["authorization"].split(" ")[1];
 
-  console.log("Received token", token);
+  console.log("Received token:", token);
 
-  if (!token) return res.status(401).json({ message: "Unauthorized" }); // Unauthorized
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: Token missing" });
+  }
 
   jwt.verify(token, "my-secret-key", (err, user) => {
     if (err) {
-      console.log("JWT error: ", err);
-      return res.status(403).json({ message: "Forbidden" }); // Forbidden
+      console.log("JWT verification error:", err);
+      return res.status(403).json({ message: "Forbidden: Invalid token" });
     }
-    req.user = user;
-    next();
+
+    req.user = user; // Token is valid, save user info in request
+    next(); // Continue to next middleware or route
   });
 };
 
@@ -77,7 +80,13 @@ app.post("/register", (req, res) => {
   // hash the password
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) throw err;
-    const user = { fullName, username, password: hash, role: "user", email }; // default role is user
+    const user = {
+      fullName,
+      username,
+      password: hash,
+      role: role || "user",
+      email,
+    }; // default role is user
     users.push(user);
     res.status(201).json({ message: "User registered successfully", username });
   });
@@ -92,7 +101,7 @@ app.post("/login", (req, res) => {
   bcrypt.compare(password, user.password, (err, result) => {
     if (err) throw err;
     if (result) {
-      const token = jwt.sign({ username, role: user.role }, "my-secret-key", {
+      const token = jwt.sign({ fullName: user.fullName, username, role: user.role }, "my-secret-key", {
         expiresIn: "1h",
       });
       tokens.push(token); // Store the token in memory
@@ -125,13 +134,23 @@ app.get("/dashboard", authenticateToken, checkRole("user"), (req, res) => {
 });
 
 // Add a /admin route that requires admin role
-app.get("/admin", authenticateToken, checkRole("admin", "superadmin"), (req, res) => {
-  res.json({ message: "Welcome to the admin panel" });
-});
+app.get(
+  "/admin",
+  authenticateToken,
+  checkRole("admin", "superadmin"),
+  (req, res) => {
+    res.json({ message: "Welcome to the admin panel" });
+  }
+);
 
-app.get("/superadmin", authenticateToken, checkRole("admin", "superadmin"), (req, res) => {
-  res.json({ message: "Welcome to the super admin panel" });
-});
+app.get(
+  "/superadmin",
+  authenticateToken,
+  checkRole("admin", "superadmin"),
+  (req, res) => {
+    res.json({ message: "Welcome to the super admin panel" });
+  }
+);
 
 app.get("/user", authenticateToken, checkRole("user"), (req, res) => {
   res.json({ message: "Welcome to the user panel" });
