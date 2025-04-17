@@ -1,4 +1,3 @@
-// 🚀 Next Challenges:
 const express = require("express");
 const app = express();
 // const cors = require('cors');
@@ -28,21 +27,57 @@ app.use(
 const authenticateToken = (req, res, next) => {
   const token =
     req.headers["authorization"] && req.headers["authorization"].split(" ")[1];
-  if (!token) return res.sendStatus(401); // Unauthorized
+
+  console.log("Received token", token);
+
+  if (!token) return res.status(401).json({ message: "Unauthorized" }); // Unauthorized
 
   jwt.verify(token, "my-secret-key", (err, user) => {
-    if (err) return res.sendStatus(403); // Forbidden
+    if (err) {
+      console.log("JWT error: ", err);
+      return res.status(403).json({ message: "Forbidden" }); // Forbidden
+    }
     req.user = user;
     next();
   });
 };
 
+// Middleware to role-check the user
+const checkRole = (...role) => {
+  return (req, res, next) => {
+    if (!role.includes(req.user.role)) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    console.log("User role is: ", req.user.role);
+    next();
+  };
+};
+
 // register a user with hashed password
 app.post("/register", (req, res) => {
-  const { fullName, username, password } = req.body;
+  const { fullName, username, password, confirmPassword, role, email } =
+    req.body;
+
+  // check if the user already exists
+  const userExists = users.find((u) => u.username === username);
+  if (userExists) {
+    return res.status(400).json({ message: "User already exists" });
+  }
+
+  // check if all fields are provided
+  if (!fullName || !username || !password || !confirmPassword || !email) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  // check if the password and confirm password match
+  if (password !== confirmPassword) {
+    return res.status(400).json({ message: "Passwords do not match" });
+  }
+
+  // hash the password
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) throw err;
-    const user = { fullName, username, password: hash };
+    const user = { fullName, username, password: hash, role: "user", email }; // default role is user
     users.push(user);
     res.status(201).json({ message: "User registered successfully", username });
   });
@@ -57,7 +92,7 @@ app.post("/login", (req, res) => {
   bcrypt.compare(password, user.password, (err, result) => {
     if (err) throw err;
     if (result) {
-      const token = jwt.sign({ username }, "my-secret-key", {
+      const token = jwt.sign({ username, role: user.role }, "my-secret-key", {
         expiresIn: "1h",
       });
       tokens.push(token); // Store the token in memory
@@ -77,11 +112,12 @@ app.get("/logout", (req, res) => {
 });
 
 // Add a /profile route that returns the username from token data
-app.get("/profile", authenticateToken, (req, res) => {
+app.get("/profile", authenticateToken, checkRole("user"), (req, res) => {
   res.json({ username: req.user.username });
 });
+
 // Add a /dashboard route that requires authentication
-app.get("/dashboard", authenticateToken, (req, res) => {
+app.get("/dashboard", authenticateToken, checkRole("user"), (req, res) => {
   res.json({
     message: "Welcome to the dashboard",
     username: req.user.username,
@@ -89,12 +125,20 @@ app.get("/dashboard", authenticateToken, (req, res) => {
 });
 
 // Add a /admin route that requires admin role
-app.get("/admin", authenticateToken, (req, res) => {
-  if (req.user.role === "admin") {
-    res.json({ message: "Welcome to the admin panel" });
-  } else {
-    res.status(403).json({ message: "Forbidden" });
-  }
+app.get("/admin", authenticateToken, checkRole("admin", "superadmin"), (req, res) => {
+  res.json({ message: "Welcome to the admin panel" });
+});
+
+app.get("/superadmin", authenticateToken, checkRole("admin", "superadmin"), (req, res) => {
+  res.json({ message: "Welcome to the super admin panel" });
+});
+
+app.get("/user", authenticateToken, checkRole("user"), (req, res) => {
+  res.json({ message: "Welcome to the user panel" });
+});
+
+app.get("/guest", authenticateToken, checkRole("guest"), (req, res) => {
+  res.json({ message: "Welcome to the guest panel" });
 });
 
 app.listen(3000, () => {
@@ -118,7 +162,4 @@ app.listen(3000, () => {
 // 10. Add input validation and sanitization to prevent SQL injection and XSS attacks.
 // 11. Create a front-end application (using React, Vue, or Angular) to interact with the API.
 // 12. Implement user roles and permissions to restrict access to certain routes.
-// 13. Add logging and monitoring to track user activity and API usage.
-// 14. Implement rate limiting to prevent abuse of the API.
-// 15. Use environment variables to store sensitive information like secret keys and database credentials.
-// 16. Add unit tests and integration tests to ensure the API works as expected.
+// 13. Add unit tests and integration tests to ensure the API works as expected.
