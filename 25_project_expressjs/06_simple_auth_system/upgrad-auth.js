@@ -13,6 +13,8 @@ const bcrypt = require("bcrypt");
 // Store tokens in an array (to simulate session tracking)
 let tokens = []; // Store tokens in memory (for simplicity)
 let users = []; // Store users in memory (for simplicity)
+let blacklistedTokens = []; // Store blacklisted tokens in memory (for simplicity)
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -101,9 +103,13 @@ app.post("/login", (req, res) => {
   bcrypt.compare(password, user.password, (err, result) => {
     if (err) throw err;
     if (result) {
-      const token = jwt.sign({ fullName: user.fullName, username, role: user.role }, "my-secret-key", {
-        expiresIn: "1h",
-      });
+      const token = jwt.sign(
+        { fullName: user.fullName, username, role: user.role },
+        "my-secret-key",
+        {
+          expiresIn: "1h",
+        }
+      );
       tokens.push(token); // Store the token in memory
       res.json({ token });
     } else {
@@ -117,6 +123,8 @@ app.get("/logout", (req, res) => {
   const token =
     req.headers["authorization"] && req.headers["authorization"].split(" ")[1];
   tokens = tokens.filter((t) => t !== token); // Remove the token from memory
+  blacklistedTokens.push(token); // Add the token to the blacklist
+  res.clearCookie("token"); // Clear the cookie (if used)
   res.json({ message: "Logged out successfully" });
 });
 
@@ -168,9 +176,17 @@ app.listen(3000, () => {
   console.log("Nodemon is being used for automatic server restarts.");
 });
 
+// 5. Auth Controllers
+//  Register
+//  Login
+//  Logout
+//  blacklist token
+//  Token Refresh
+//  Get Me (profile)
+
 // 🚀 Next Challenges:
 // 1. Implement password reset functionality using email verification.
-// 2. Add role-based access control (RBAC) to restrict certain routes to specific user roles.
+// 2. Add a /reset-password route that allows users to reset their password.
 // 3. Use a database (like MongoDB or PostgreSQL) to store user data instead of in-memory arrays.
 // 4. Implement token expiration and refresh token functionality for better security.
 // 5. Add logging and monitoring to track user activity and API usage.
