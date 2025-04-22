@@ -28,6 +28,30 @@ const server = http.createServer((req, res) => {
     login(req, res);
   } else if (req.method === "GET" && req.url === "/logout") {
     logout(req, res);
+  } else if (req.method === "GET" && req.url === "/protected") {
+    if (req.session) {
+      res.writeHead(200, { "Content-Type": "text/plain" });
+      res.end("This is a protected route");
+    } else {
+      res.writeHead(401, { "Content-Type": "text/plain" });
+      res.end("Unauthorized");
+    }
+  } else if (req.method === "GET" && req.url === "/dashboard") {
+    if (req.session) {
+      res.writeHead(200, { "Content-Type": "text/plain" });
+      res.end(`Welcome to your dashboard, ${req.session.username}`);
+    } else {
+      res.writeHead(401, { "Content-Type": "text/plain" });
+      res.end("Unauthorized");
+    }
+  } else if (req.method === "GET" && req.url === "/profile") {
+    if (req.session) {
+      res.writeHead(200, { "Content-Type": "text/plain" });
+      res.end(`Welcome to your profile, ${req.session.username}`);
+    } else {
+      res.writeHead(401, { "Content-Type": "text/plain" });
+      res.end("Unauthorized");
+    }
   } else {
     res.writeHead(404, { "Content-Type": "text/plain" });
     res.end("Not Found");
