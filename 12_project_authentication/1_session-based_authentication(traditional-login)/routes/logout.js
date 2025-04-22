@@ -1,3 +1,4 @@
+// logout handler file
 const sessions = require("../sessionStore");
 
 const logout = (req, res) => {

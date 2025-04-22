@@ -1,3 +1,4 @@
+// session-based-auth-with-express-session.js main server file
 const http = require("http");
 const register = require("./routes/register");
 const login = require("./routes/login");
@@ -22,9 +23,15 @@ const server = http.createServer((req, res) => {
   if (req.method === "GET" && req.url === "/") {
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(`<h1>Welcome ${req.session?.username || "Guest"}!</h1>`);
+  } else if (req.method === "GET" && req.url === "/register") {
+    register(req, res);
   } else if (req.method === "POST" && req.url === "/register") {
     register(req, res);
+  } else if (req.method === "GET" && req.url === "/login") {
+    login(req, res);
   } else if (req.method === "POST" && req.url === "/login") {
+    login(req, res);
+  } else if (req.method === "GET" && req.url === "/login") {
     login(req, res);
   } else if (req.method === "GET" && req.url === "/logout") {
     logout(req, res);

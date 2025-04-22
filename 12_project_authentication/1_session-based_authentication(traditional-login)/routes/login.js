@@ -1,16 +1,28 @@
+// routes/login.js
 const { findUser } = require("../userStore");
 const { v4: uuidv4 } = require("uuid");
 const sessions = require("../sessionStore");
 const querystring = require("querystring");
 
 const login = (req, res) => {
+  if (req.method === "GET") {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(`
+      <h1>Login</h1>
+      <form method="POST" action="/login">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+    `);
+    return;
+  }
+
   let body = "";
   req.on("data", (chunk) => (body += chunk.toString()));
   req.on("end", () => {
-    // const { username, password } = querystring.parse(body);
-    // const { username, password } = JSON.parse(body);
-
     let username, password;
+
     if (req.headers["content-type"] === "application/json") {
       ({ username, password } = JSON.parse(body));
     } else if (
@@ -23,16 +35,14 @@ const login = (req, res) => {
     }
 
     const user = findUser(username);
-
     if (user && user.password === password) {
       const sessionId = uuidv4();
       sessions[sessionId] = { username };
-
-      res.writeHead(200, {
+      res.writeHead(302, {
         "Set-Cookie": `sessionId=${sessionId}; HttpOnly`,
-        "Content-Type": "text/plain",
+        Location: "/dashboard",
       });
-      res.end("Login successful");
+      res.end();
     } else {
       res.writeHead(401, { "Content-Type": "text/plain" });
       res.end("Invalid credentials");
