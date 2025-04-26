@@ -5,8 +5,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
-import authRoutes from './routes/authRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/auth.route.js';
+import userRoutes from './routes/user.route.js';
 
 const app = express();
 
