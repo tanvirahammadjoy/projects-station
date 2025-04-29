@@ -5,6 +5,9 @@ import app from "./app.js";
 
 // Load environment variables
 dotenv.config();
+// console.log("MONGO_URI:", process.env.MONGO_URI);
+// console.log("MONGO_URI:", process.env.NODE_ENV);
+// console.log("MONGO_URI:", process.env.PORT);
 
 // Connect to MongoDB
 connectDB();
@@ -24,7 +27,7 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  console.log(`Server running in ${process.env.NODE_ENV}${PORT}`);
 });
 
 // Uncomment the following lines if you want to use the old way to connect to MongoDB (commented out for clarity)

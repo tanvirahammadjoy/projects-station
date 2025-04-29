@@ -5,7 +5,6 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
-import authRoutes from './routes/auth.route.js';
 import userRoutes from './routes/user.route.js';
 
 const app = express();
@@ -22,8 +21,7 @@ app.use(express.urlencoded({ extended: true })); // To parse form data
 app.use(cookieParser());
 
 // API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
+app.use("/api/users", userRoutes); // any /api/users routes go to userRoutes
 
 // Health check route
 app.get('/', (req, res) => {
