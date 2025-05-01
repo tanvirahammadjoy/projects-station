@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 import userRoutes from './routes/user.route.js';
+import PostRoutes from './routes/post.route.js';
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.use(cookieParser());
 
 // API Routes
 app.use("/api/users", userRoutes); // any /api/users routes go to userRoutes
+// Post routes
+app.use("/api/posts", PostRoutes);
 
 // Health check route
 app.get('/', (req, res) => {
